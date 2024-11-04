@@ -1,20 +1,10 @@
 import { useState } from "react";
 import AddTask from "./components/AddTask";
 import TaskList from "./components/TaskList";
+import { v4 } from "uuid";
 
 function App() {
-  const [tasks, updateTasks] = useState([
-    {
-      id: 1,
-      title: "Estudar React",
-      done: false,
-    },
-    {
-      id: 2,
-      title: "Estudar .NET",
-      done: false,
-    },
-  ]);
+  const [tasks, updateTasks] = useState([]);
 
   function onTaskClick(taskId) {
     const newTasks = tasks.map((task) => {
@@ -27,14 +17,29 @@ function App() {
     updateTasks(newTasks);
   }
 
+  function deleteTask(taskId) {
+    const newTasks = tasks.filter((task) => task.id !== taskId);
+    updateTasks(newTasks);
+  }
+
+  function addTask(task) {
+    task.id = v4();
+    const newTask = [...tasks, task];
+    updateTasks(newTask);
+  }
+
   return (
     <div className="w-screen h-screen bg-gray-400 flex justify-center p-6">
-      <div className="w-[500px]">
+      <div className="w-[500px] flex flex-col gap-5">
         <h1 className="text-slate-50 text-center text-3xl font-bold">
           Gerenciador Tarefas
         </h1>
-        <AddTask />
-        <TaskList tasks={tasks} onTaskClick={onTaskClick} />
+        <AddTask addTask={addTask} />
+        <TaskList
+          tasks={tasks}
+          onTaskClick={onTaskClick}
+          deleteTask={deleteTask}
+        />
       </div>
     </div>
   );
