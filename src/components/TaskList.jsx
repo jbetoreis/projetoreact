@@ -22,9 +22,12 @@ function TaskList(props) {
               {task.done ? <Check /> : <Square />}
               {task.title}
             </button>
-            <button className="bg-slate-300 p-3 text-white rounded-md">
+            <a
+              href={`/task?title=${task.title}`}
+              className="bg-slate-300 p-3 text-white rounded-md"
+            >
               <Eye />
-            </button>
+            </a>
             <button
               onClick={() => props.deleteTask(task.id)}
               className="bg-slate-300 p-3 text-white rounded-md"
