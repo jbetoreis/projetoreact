@@ -1,6 +1,15 @@
 import { Check, Eye, Square, Trash } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function TaskList(props) {
+  const navigate = useNavigate();
+
+  function navigateToTaskDatail(task) {
+    const query = new URLSearchParams();
+    query.set("title", task.title);
+    navigate(`/task?${query.toString()}`);
+  }
+
   return (
     <ul className="bg-slate-500 p-5 rounded-lg shadow-md flex flex-col gap-3">
       {props.tasks.length === 0 ? (
@@ -22,12 +31,12 @@ function TaskList(props) {
               {task.done ? <Check /> : <Square />}
               {task.title}
             </button>
-            <a
-              href={`/task?title=${task.title}`}
+            <button
+              onClick={() => navigateToTaskDatail(task)}
               className="bg-slate-300 p-3 text-white rounded-md"
             >
               <Eye />
-            </a>
+            </button>
             <button
               onClick={() => props.deleteTask(task.id)}
               className="bg-slate-300 p-3 text-white rounded-md"
