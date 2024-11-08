@@ -1,10 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddTask from "./components/AddTask";
 import TaskList from "./components/TaskList";
 import { v4 } from "uuid";
 
 function App() {
-  const [tasks, updateTasks] = useState([]);
+  const [tasks, updateTasks] = useState(
+    JSON.parse(localStorage.getItem("tasks"))
+  );
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  /* useEffect(() => {
+    async function getTasks() {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/todos?_limit=10"
+      );
+
+      const data = await response.json();
+
+      updateTasks(data);
+    }
+
+    getTasks();
+  }, []); */
 
   function onTaskClick(taskId) {
     const newTasks = tasks.map((task) => {

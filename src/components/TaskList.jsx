@@ -1,5 +1,6 @@
 import { Check, Eye, Square, Trash } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import ButtonIcon from "./ButtonIcon";
 
 function TaskList(props) {
   const navigate = useNavigate();
@@ -31,18 +32,12 @@ function TaskList(props) {
               {task.done ? <Check /> : <Square />}
               {task.title}
             </button>
-            <button
-              onClick={() => navigateToTaskDatail(task)}
-              className="bg-slate-300 p-3 text-white rounded-md"
-            >
+            <ButtonIcon onClick={() => navigateToTaskDatail(task)}>
               <Eye />
-            </button>
-            <button
-              onClick={() => props.deleteTask(task.id)}
-              className="bg-slate-300 p-3 text-white rounded-md"
-            >
+            </ButtonIcon>
+            <ButtonIcon onClick={() => props.deleteTask(task.id)}>
               <Trash />
-            </button>
+            </ButtonIcon>
           </li>
         ))
       )}
